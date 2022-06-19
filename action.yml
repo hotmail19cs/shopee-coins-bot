@@ -84,7 +84,6 @@ runs:
           -t \
           -v /tmp/shopee_bot:/screenshot \
           ${{ inputs.image }} -c /repo/plain_credential $FLAGS -s /screenshot
-      continue-on-error: true
 
     - name: Upload error screenshot
       if: ${{ failure() }}
@@ -94,7 +93,7 @@ runs:
         path: /tmp/shopee_bot/screenshot.png
 
     - name: Encrypt credential
-      if: ${{ steps.bot.outcome == 'success' }}
+      if: ${{ success() }}
       shell: bash -e {0}
       run: |
         # If the checkout did not succeeded then the credentials is placed 
